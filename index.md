@@ -8,3 +8,4 @@ When I'm not immersed in data and code, you can often find me engaging in physic
 
 I am excited to showcase my projects, skills, and experiences through this personal portfolio website. Join me on this journey as I continue to explore the ever-evolving world of data science and machine learning.
 
+OK
