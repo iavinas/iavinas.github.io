@@ -1,0 +1,282 @@
+Here are all the questions/programs from the images:
+
+1. Program 1: Create a form with the elements of Textboxes, Radio buttons, Checkboxes, and so on. Write JavaScript code to validate the format in email, and mobile number in 10 characters. If a textbox has been left empty, popup an alert indicating when email, mobile number and textbox has been left empty.
+
+2. Program 2: Develop an HTML Form, which accepts any Mathematical expression. Write JavaScript code to Evaluate the expression and Display the result.
+
+3. Program 3: Create a page with dynamic effects. Write the code to include layers and basic animation.
+
+4. Program 4: Write a JavaScript code to find the sum of N natural Numbers. (Use userdefined function)
+
+5. Program 5: Write a JavaScript code block using arrays and generate the current date in words, this should include the day, month and year.
+
+6. Program 6: Create a form for Student information. Write JavaScript code to find Total, Average, Result and Grade.
+
+
+```Program 1
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form Validation</title>
+    <script>
+        function validateForm() {
+            var email = document.forms["myForm"]["email"].value;
+            var mobile = document.forms["myForm"]["mobile"].value;
+            var name = document.forms["myForm"]["name"].value;
+            var emailRegex = /^[a-zA-Z0-9.-_]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+            var mobileRegex = /^[0-9]{10}$/;
+
+            if (name == "") {
+                alert("Name must be filled out");
+                return false;
+            }
+            if (!emailRegex.test(email)) {
+                alert("Invalid email format");
+                return false;
+            }
+            if (!mobileRegex.test(mobile)) {
+                alert("Mobile number must be 10 digits");
+                return false;
+            }
+        }
+    </script>
+</head>
+<body>
+    <form name="myForm" onsubmit="return validateForm()" method="post">
+        Name: <input type="text" name="name"><br><br>
+        Email: <input type="text" name="email"><br><br>
+        Mobile: <input type="text" name="mobile"><br><br>
+        Gender:
+        <input type="radio" name="gender" value="male"> Male
+        <input type="radio" name="gender" value="female"> Female<br><br>
+        Hobbies:
+        <input type="checkbox" name="hobby1" value="Reading"> Reading
+        <input type="checkbox" name="hobby2" value="Traveling"> Traveling<br><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
+
+
+
+```
+
+
+
+
+``` Program 2
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Math Expression Evaluator</title>
+</head>
+<body>
+    <form id="mathForm">
+        <label for="expression">Enter Mathematical Expression:</label>
+        <input type="text" id="expression" name="expression">
+        <input type="button" value="Evaluate" onclick="evaluateExpression()">
+    </form>
+    <div id="result"></div>
+
+    <script>
+        function evaluateExpression() {
+            try {
+                var expression = document.getElementById('expression').value;
+                var result = eval(expression);
+                document.getElementById('result').innerText = 'Result: ' + result;
+            } catch (error) {
+                document.getElementById('result').innerText = 'Invalid expression';
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+
+```
+
+
+``` Program 3
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dynamic Page with Animation</title>
+    <style>
+        .layer {
+            width: 200px;
+            height: 200px;
+            background-color: skyblue;
+            position: absolute;
+            text-align: center;
+            line-height: 200px;
+            border-radius: 10px;
+            left: 0;
+            top: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="movingLayer" class="layer">Web Programming</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const layer = document.getElementById('movingLayer');
+            let position = 0;
+            let direction = 1;
+
+            setInterval(() => {
+                if (position > window.innerWidth - 200 || position < 0) {
+                    direction *= -1;
+                }
+                position += 5 * direction;
+                layer.style.left = position + 'px';
+            }, 50);
+        });
+    </script>
+</body>
+</html>
+
+
+```​​​​​​​​​​​​​​​​
+
+
+```Program 4
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sum of Natural Numbers</title>
+    <script>
+        function sumOfNaturalNumbers(n) {
+            let sum = 0;
+            for (let i = 1; i <= n; i++) {
+                sum += i;
+            }
+            return sum;
+        }
+
+        function calculateSum() {
+            let n = document.getElementById("numberInput").value;
+            n = parseInt(n);
+            if (!isNaN(n) && n > 0) {
+                let sum = sumOfNaturalNumbers(n);
+                alert("Sum of first " + n + " natural numbers is: " + sum);
+            } else {
+                alert("Please enter a positive integer.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>Sum of N Natural Numbers</h2>
+    <label for="numberInput">Enter a number:</label>
+    <input type="number" id="numberInput" min="1">
+    <button onclick="calculateSum()">Calculate Sum</button>
+</body>
+</html>
+
+
+```​​​​​​​​​​​​​​​​
+
+
+```Program 5
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Current Date in Words</title>
+</head>
+<body>
+    <h1>Today's Date</h1>
+    <p id="dateInWords"></p>
+
+    <script>
+        // Arrays containing the names of days and months
+        const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", 
+            "Saturday"];
+        const months = ["January", "February", "March", "April", "May", "June", "July",
+            "August", "September", "October", "November", "December"];
+
+        // Getting the current date
+        const now = new Date();
+
+        // Extracting the day, month, and year from the current date
+        const dayName = days[now.getDay()];
+        const monthName = months[now.getMonth()];
+        const year = now.getFullYear();
+        const date = now.getDate();
+
+        // Constructing the date string
+        const dateString = `${dayName}, ${monthName} ${date}, ${year}`;
+
+        // Displaying the date string in the webpage
+        document.getElementById("dateInWords").innerText = dateString;
+    </script>
+</body>
+</html>
+
+
+
+```​​​​​​​​​​​​​​​​
+
+
+```Program 6
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Information</title>
+    <script>
+        function calculateResults() {
+            var marks = document.getElementsByClassName('marks');
+            var total = 0;
+            for(var i = 0; i < marks.length; i++) {
+                total += parseInt(marks[i].value, 10);
+            }
+            var average = total / marks.length;
+            var result = average >= 40 ? 'Pass' : 'Fail';
+            var grade = '';
+            if (average >= 80) {
+                grade = 'A';
+            } else if (average >= 60) {
+                grade = 'B';
+            } else if (average >= 40) {
+                grade = 'C';
+            } else {
+                grade = 'F';
+            }
+            document.getElementById('total').innerHTML = 'Total: ' + total;
+            document.getElementById('average').innerHTML = 'Average: ' + average.toFixed(2);
+            document.getElementById('result').innerHTML = 'Result: ' + result;
+            document.getElementById('grade').innerHTML = 'Grade: ' + grade;
+        }
+    </script>
+</head>
+<body>
+    <h2>Student Information</h2>
+    <form>
+        Name: <input type="text" id="name"><br><br>
+        Marks 1: <input type="number" class="marks"><br><br>
+        Marks 2: <input type="number" class="marks"><br><br>
+        Marks 3: <input type="number" class="marks"><br><br>
+        <button type="button" onclick="calculateResults()">Calculate</button>
+    </form>
+    <p id="total"></p>
+    <p id="average"></p>
+    <p id="result"></p>
+    <p id="grade"></p>
+</body>
+</html>
+
+
+```​​​​​​​​​​​​​​​​
