@@ -1,0 +1,305 @@
+
+
+```Program 8
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Color Change by Day</title>
+    <?php
+        $daysOfWeek = array(
+            'Sunday' => '#FF5733',
+            'Monday' => '#33FF57',
+            'Tuesday' => '#3357FF',
+            'Wednesday' => '#FFFF33',
+            'Thursday' => '#FF33FF',
+            'Friday' => '#33FFFF',
+            'Saturday' => '#FF3333'
+        );
+
+        $currentDay = date('l'); // Gets the full textual representation of the day
+        $backgroundColor = '#FFFFFF'; // Default color
+
+        if (array_key_exists($currentDay, $daysOfWeek)) {
+            $backgroundColor = $daysOfWeek[$currentDay];
+        }
+    ?>
+    <style>
+        body {
+            background-color: <?php echo $backgroundColor; ?>;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome! Today is <?php echo $currentDay; ?>.</h1>
+</body>
+</html>
+
+
+```
+
+```Program 9
+
+
+<?php
+function generatePrimes($maxNumber) {
+    echo "Prime numbers up to $maxNumber: ";
+    for ($number = 2; $number <= $maxNumber; $number++) {
+        $isPrime = true;
+        for ($i = 2; $i <= sqrt($number); $i++) {
+            if ($number % $i == 0) {
+                $isPrime = false;
+                break;
+            }
+        }
+        if ($isPrime) {
+            echo $number . " ";
+        }
+    }
+    echo "<br>";
+}
+
+function fibonacciSeries($numTerms) {
+    $first = 0;
+    $second = 1;
+    
+    echo "Fibonacci Series ($numTerms terms): ";
+    for ($i = 0; $i < $numTerms; $i++) {
+        echo $first . " ";
+        $next = $first + $second;
+        $first = $second;
+        $second = $next;
+    }
+    echo "<br>";
+}
+
+// Call the functions with desired parameters
+generatePrimes(50); // Generate prime numbers up to 50
+fibonacciSeries(10); // Generate 10 terms of the Fibonacci series
+?>
+
+
+
+```
+
+
+```Program 13
+
+
+<?php
+session_start();
+
+function generateCaptchaCode($length = 6) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    
+    return $randomString;
+}
+
+echo "Captcha Code is : ".generateCaptchaCode();
+?>
+
+
+```
+
+
+:
+
+```Program 16
+<?php
+$conn = new mysqli("localhost", "root", "", "myDB"); // Establish connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error); // Connection error
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $regno = $_POST['regno'];
+    $name = $_POST['name'];
+    $age = $_POST['age'];
+    $course = $_POST['course'];
+
+    switch ($_POST['action']) {
+        case 'Add':
+            $sql = "INSERT INTO student VALUES ('$regno','$name','$age','$course')";
+            break;
+        case 'Update':
+            $sql = "UPDATE student SET name='$name',age='$age',course='$course' WHERE regno='$regno'";
+            break;
+        case 'Delete':
+            $sql = "DELETE FROM student WHERE regno='$regno'";
+            break;
+    }
+    if ($conn->query($sql) === FALSE) {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+
+// Function to display students
+function displayStudents($conn) {
+    $sql = "SELECT * FROM student";
+    $result = $conn->query($sql);
+    
+    if ($result->num_rows > 0) {
+        echo "<table border='1'><tr><th>Reg No</th><th>Name</th><th>Age</th><th>Course</th></tr>";
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr><td>" . $row["regno"] .
+                 "</td><td>" . $row["name"] .
+                 "</td><td>" . $row["age"] .
+                 "</td><td>" . $row["course"] .
+                 "</td></tr>";
+        }
+        echo "</table>";
+    } else {
+        echo "0 results";
+    }
+}
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Database Management</title>
+</head>
+<body>
+    <h1>Manage Students</h1>
+    <form method="post">
+        Reg No: <input type="text" name="regno" required><br><br>
+        Name: <input type="text" name="name"><br><br>
+        Age: <input type="number" name="age"><br><br>
+        Course: <input type="text" name="course"><br><br>
+        <input type="submit" name="action" value="Add">
+        <input type="submit" name="action" value="Update">
+        <input type="submit" name="action" value="Delete">
+    </form>
+
+    <?php
+        displayStudents($conn); // Display students
+        $conn->close(); // Close connection
+    ?>
+</body>
+</html>
+
+
+```
+
+Before running this code, you need to:
+
+1. Start WAMP Server
+2. Create the database and table in MySQL:
+   - Open phpMyAdmin (http://localhost/phpmyadmin/)
+   - Login with username 'root' and no password
+   - Create a new database named 'myDB'
+   - Create a table named 'student' with these columns:
+     ```sql
+     CREATE TABLE student (
+         regno INT PRIMARY KEY,
+         name VARCHAR(50),
+         age INT,
+         course VARCHAR(50)
+     );
+     ```
+3. Save the PHP file as `StudentDatabase.php` in your www directory
+4. Access the page at http://localhost/StudentDatabase.php
+
+The program allows you to:
+- Add new student records
+- Update existing student records
+- Delete student records
+- View all student records in a table format​​​​​​​​​​​​​​​​
+
+
+
+
+You need to create a new file named `InputValidation.php`. Here's the complete code:
+
+```Program 17
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Input Validation</title>
+</head>
+<body>
+    <form method="post">
+        Name: <input type="text" name="name"><br><br>
+        Email: <input type="text" name="email"><br><br>
+        <input type="submit" name="submit" value="Submit">
+    </form>
+
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+
+    if (empty($name)) {
+        echo "Name is required.<br><br>";
+    } else {
+        echo "Name: " . $name . "<br><br>";
+    }
+
+    if (empty($email)) {
+        echo "Email is required.<br><br>";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "Invalid email format.<br><br>";
+    } else {
+        echo "Email: " . $email . "<br><br>";
+    }
+}
+?>
+
+</body>
+</html>
+
+
+
+```
+
+
+
+```Program 20
+
+<?php
+// Exception handling for division by zero
+function divide($numerator, $denominator) {
+    if ($denominator == 0) {
+        throw new Exception("Cannot divide by zero.");
+    }
+    return $numerator / $denominator;
+}
+
+// Exception handling for checking date format
+function checkDateFormat($date, $format = 'Y-m-d') {
+    $dateTime = DateTime::createFromFormat($format, $date);
+    if (!$dateTime || $dateTime->format($format) != $date) {
+        throw new Exception("Invalid date format.");
+    }
+    echo "The date " . $date . " is valid.<br>";
+    return true;
+}
+
+// Testing Division
+try {
+    echo divide(10, 2) . "<br>"; // Should work
+    echo divide(10, 0) . "<br>"; // Should throw exception
+} catch (Exception $e) {
+    echo "Division error: " . $e->getMessage() . "<br>";
+}
+
+// Testing Date Format
+try {
+    checkDateFormat("2023-03-10"); // Should work and confirm validity
+    checkDateFormat("10/03/2023"); // Should throw exception
+} catch (Exception $e) {
+    echo "Date error: " . $e->getMessage() . "<br>";
+}
+?>
+
+
+
+```
